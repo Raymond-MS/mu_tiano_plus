@@ -2,25 +2,10 @@
 #  Provides ACPI methods for TPM 2.0 support
 #
 #  Spec Compliance Info:
-#     "TCG ACPI Specification Version 1.2 Revision 8"
-#     "Physical Presence Interface Specification Version 1.30 Revision 00.52"
-#       along with
-#     "Errata Version 0.4 for TCG PC Client Platform Physical Presence Interface Specification"
-#     "Platform Reset Attack Mitigation Specification Version 1.00"
-#    TPM2.0 ACPI device object
-#     "TCG PC Client Platform Firmware Profile Specification for TPM Family 2.0 Level 00 Revision 1.03 v51"
-#       along with
-#     "Errata for PC Client Specific Platform Firmware Profile Specification Version 1.0 Revision 1.03"
+#     "TCG ACPI Specification Version 1.4 Revision 15"
+#     "TCG PC Client Platform Firmware Profile Specification for TPM Family 2.0 Revision 1.04 v14"
 #
-#  This driver implements TPM 2.0 definition block in ACPI table and
-#  populates registered SMI callback functions for Tcg2 physical presence
-#  and MemoryClear to handle the requests for ACPI method. It needs to be
-#  used together with Tcg2 MM drivers to exchange information on registered
-#  SwSmiValue and allocated NVS region address.
-#
-#  Caution: This module requires additional review when modified.
-#  This driver will have external input - variable and ACPINvs data in SMM mode.
-#  This external input must be validated carefully to avoid security issue.
+#  This driver implements TPM 2.0 definition block in ACPI table for FF-A over CRB.
 #
 # Copyright (c) 2015 - 2019, Intel Corporation. All rights reserved.<BR>
 # Copyright (c) Microsoft Corporation.<BR>
@@ -57,19 +42,12 @@
   Tpm2CommandLib
   Tcg2PhysicalPresenceLib
   PcdLib
-  MmUnblockMemoryLib
 
 [Guids]
-  gEfiTpmDeviceInstanceTpm20DtpmGuid                            ## PRODUCES           ## GUID       # TPM device identifier
-  gTpmNvsMmGuid                                                 ## CONSUMES
-  gEdkiiPiSmmCommunicationRegionTableGuid                       ## CONSUMES
+  gEfiTpmDeviceInstanceTpm20DtpmGuid                            ## PRODUCES ## GUID # TPM device identifier
 
 [Protocols]
   gEfiAcpiTableProtocolGuid                                     ## CONSUMES
-  gEfiMmCommunicationProtocolGuid                               ## CONSUMES
-
-[FixedPcd]
-  gEfiSecurityPkgTokenSpaceGuid.PcdSmiCommandIoPort             ## CONSUMES
 
 [Pcd]
   gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiDefaultOemId                ## SOMETIMES_CONSUMES
@@ -78,7 +56,6 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiDefaultCreatorId            ## SOMETIMES_CONSUMES
   gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiDefaultCreatorRevision      ## SOMETIMES_CONSUMES
   gEfiSecurityPkgTokenSpaceGuid.PcdTpmInstanceGuid                  ## CONSUMES
-  gEfiSecurityPkgTokenSpaceGuid.PcdTpmBaseAddress                   ## CONSUMES
   gEfiSecurityPkgTokenSpaceGuid.PcdTpm2AcpiTableRev                 ## CONSUMES
   gEfiSecurityPkgTokenSpaceGuid.PcdTcgPhysicalPresenceInterfaceVer  ## CONSUMES
   gEfiSecurityPkgTokenSpaceGuid.PcdTpmPlatformClass                 ## SOMETIMES_CONSUMES
@@ -88,6 +65,10 @@
   gEfiSecurityPkgTokenSpaceGuid.PcdSkipTcgSmmAcpiMeasurements       ## CONSUMES
   gEfiSecurityPkgTokenSpaceGuid.PcdTpm2AcpiTableLaml                ## CONSUMES
   gEfiSecurityPkgTokenSpaceGuid.PcdTpm2AcpiTableLasa                ## CONSUMES
+
+[FixedPcd]
+  gEfiSecurityPkgTokenSpaceGuid.PcdTpmBaseAddress                   ## CONSUMES
+  gEfiSecurityPkgTokenSpaceGuid.PcdTpmMaxAddress                    ## CONSUMES
 
 [Depex]
   gEfiAcpiTableProtocolGuid AND

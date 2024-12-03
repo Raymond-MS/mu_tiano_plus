@@ -504,8 +504,12 @@
   gEfiSecurityPkgTokenSpaceGuid.PcdTpmAutoDetection|TRUE|BOOLEAN|0x00010011
 
   ## This PCD indicates TPM base address.<BR><BR>
-  # @Prompt TPM device address.
+  # @Prompt TPM device base address.
   gEfiSecurityPkgTokenSpaceGuid.PcdTpmBaseAddress|0xFED40000|UINT64|0x00010012
+
+  ## This PCD indicates TPM max address.<BR><BR>
+  # @Prompt TPM device max address.
+  gEfiSecurityPkgTokenSpaceGuid.PcdTpmMaxAddress|0xFED44FFF|UINT64|0x00010029
 
   ## This PCR means the OEM configured number of PCR banks.
   #  0 means dynamic get from supported HASH algorithm

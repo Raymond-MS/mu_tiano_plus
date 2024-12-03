@@ -5,10 +5,6 @@
   used together with Tcg2 MM drivers to exchange information on registered
   SwSmiValue and allocated NVS region address.
 
-  Caution: This module requires additional review when modified.
-  This driver will have external input - variable and ACPINvs data in SMM mode.
-  This external input must be validated carefully to avoid security issue.
-
 Copyright (c) 2015 - 2018, Intel Corporation. All rights reserved.<BR>
 Copyright (c) Microsoft Corporation.
 SPDX-License-Identifier: BSD-2-Clause-Patent
@@ -21,7 +17,6 @@ SPDX-License-Identifier: BSD-2-Clause-Patent
 
 #include <Guid/TpmInstance.h>
 #include <Guid/TpmNvsMm.h>
-#include <Guid/PiSmmCommunicationRegionTable.h>
 
 #include <Protocol/AcpiTable.h>
 #include <Protocol/Tcg2Protocol.h>
@@ -663,8 +658,7 @@ PublishTpm2 (
 
   InterfaceType = PcdGet8 (PcdActiveTpmInterfaceType);
   DEBUG ((DEBUG_INFO, "Tpm Active Interface Type %d\n", InterfaceType));
-  switch (InterfaceType) {
-    case Tpm2PtpInterfaceCrb:
+  if (InterfaceType == Tpm2PtpInterfaceCrb) {
       mTpm2AcpiTemplate.StartMethod          = EFI_TPM2_ACPI_TABLE_START_METHOD_COMMAND_RESPONSE_BUFFER_INTERFACE_WITH_FFA;
       mTpm2AcpiTemplate.AddressOfControlArea = PcdGet64 (PcdTpmBaseAddress) + 0x40;
       mTpm2AcpiTemplate.PlatformSpecificParameters[0] = 0x00; // Notifications Not Supported
@@ -676,10 +670,9 @@ PublishTpm2 (
       ControlArea->ResponseSize              = 0xF80;
       ControlArea->Command                   = PcdGet64 (PcdTpmBaseAddress) + 0x80;
       ControlArea->Response                  = PcdGet64 (PcdTpmBaseAddress) + 0x80;
-      break;
-    default:
+  } else {
       DEBUG ((DEBUG_ERROR, "TPM2 InterfaceType get error! %d\n", InterfaceType));
-      break;
+      return EFI_UNSUPPORTED;
   }
 
   DEBUG ((DEBUG_INFO, "Tpm2 ACPI table size %d\n", mTpm2AcpiTemplate.Header.Length));

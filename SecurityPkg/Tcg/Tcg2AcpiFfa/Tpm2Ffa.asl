@@ -15,7 +15,7 @@ DefinitionBlock (
       //
       // Operational region for TPM access
       //
-      OperationRegion (TPMR, SystemMemory, 0x10000010000, 0x5000)
+      OperationRegion (TPMR, SystemMemory, FixedPcdGet64 (PcdTpmBaseAddress), 0x5000)
       Field (TPMR, AnyAcc, NoLock, Preserve)
       {
         ACC0, 8,  // TPM_ACCESS_0
@@ -44,8 +44,8 @@ DefinitionBlock (
             Cacheable,
             ReadWrite, 
             0x0, 
-            0x10000010000, 
-            0x10000014FFF, 
+            FixedPcdGet64 (PcdTpmBaseAddress), 
+            FixedPcdGet64 (PcdTpmMaxAddress), 
             0x0, 
             0x5000)
         })
@@ -117,6 +117,7 @@ DefinitionBlock (
           Return (TPPI (Arg2, Arg3))
         }
 
+        Return (Buffer () {0})
       }
     }
   } // Scope(_SB)
