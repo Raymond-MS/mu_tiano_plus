@@ -659,20 +659,20 @@ PublishTpm2 (
   InterfaceType = PcdGet8 (PcdActiveTpmInterfaceType);
   DEBUG ((DEBUG_INFO, "Tpm Active Interface Type %d\n", InterfaceType));
   if (InterfaceType == Tpm2PtpInterfaceCrb) {
-      mTpm2AcpiTemplate.StartMethod          = EFI_TPM2_ACPI_TABLE_START_METHOD_COMMAND_RESPONSE_BUFFER_INTERFACE_WITH_FFA;
-      mTpm2AcpiTemplate.AddressOfControlArea = PcdGet64 (PcdTpmBaseAddress) + 0x40;
-      mTpm2AcpiTemplate.PlatformSpecificParameters[0] = 0x00; // Notifications Not Supported
-      mTpm2AcpiTemplate.PlatformSpecificParameters[1] = 0x00; // CRB 4KiB size, Not Cacheable
-      mTpm2AcpiTemplate.PlatformSpecificParameters[2] = 0x80; // HI Byte of Partition ID
-      mTpm2AcpiTemplate.PlatformSpecificParameters[3] = 0x02; // LO Byte of Partition ID
-      ControlArea                            = (EFI_TPM2_ACPI_CONTROL_AREA *)(UINTN)mTpm2AcpiTemplate.AddressOfControlArea;
-      ControlArea->CommandSize               = 0xF80;
-      ControlArea->ResponseSize              = 0xF80;
-      ControlArea->Command                   = PcdGet64 (PcdTpmBaseAddress) + 0x80;
-      ControlArea->Response                  = PcdGet64 (PcdTpmBaseAddress) + 0x80;
+    mTpm2AcpiTemplate.StartMethod                   = EFI_TPM2_ACPI_TABLE_START_METHOD_COMMAND_RESPONSE_BUFFER_INTERFACE_WITH_FFA;
+    mTpm2AcpiTemplate.AddressOfControlArea          = PcdGet64 (PcdTpmBaseAddress) + 0x40;
+    mTpm2AcpiTemplate.PlatformSpecificParameters[0] = 0x00;   // Notifications Not Supported
+    mTpm2AcpiTemplate.PlatformSpecificParameters[1] = 0x00;   // CRB 4KiB size, Not Cacheable
+    mTpm2AcpiTemplate.PlatformSpecificParameters[2] = 0x80;   // HI Byte of Partition ID
+    mTpm2AcpiTemplate.PlatformSpecificParameters[3] = 0x02;   // LO Byte of Partition ID
+    ControlArea                                     = (EFI_TPM2_ACPI_CONTROL_AREA *)(UINTN)mTpm2AcpiTemplate.AddressOfControlArea;
+    ControlArea->CommandSize                        = 0xF80;
+    ControlArea->ResponseSize                       = 0xF80;
+    ControlArea->Command                            = PcdGet64 (PcdTpmBaseAddress) + 0x80;
+    ControlArea->Response                           = PcdGet64 (PcdTpmBaseAddress) + 0x80;
   } else {
-      DEBUG ((DEBUG_ERROR, "TPM2 InterfaceType get error! %d\n", InterfaceType));
-      return EFI_UNSUPPORTED;
+    DEBUG ((DEBUG_ERROR, "TPM2 InterfaceType get error! %d\n", InterfaceType));
+    return EFI_UNSUPPORTED;
   }
 
   DEBUG ((DEBUG_INFO, "Tpm2 ACPI table size %d\n", mTpm2AcpiTemplate.Header.Length));
