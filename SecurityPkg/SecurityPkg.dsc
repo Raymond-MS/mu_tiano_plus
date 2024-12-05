@@ -419,7 +419,7 @@
   SecurityPkg/FvReportPei/FvReportPei.inf
 
 [Components.AARCH64]
-  SecurityPkg/Tcg/Tcg2Acpi/Tcg2AcpiFfa.inf
+  SecurityPkg/Tcg/Tcg2AcpiFfa/Tcg2AcpiFfa.inf
   SecurityPkg/Library/DxeTcg2PhysicalPresenceMinimumLib/DxeTcg2PhysicalPresenceMinimumLib.inf
 
 [BuildOptions]
