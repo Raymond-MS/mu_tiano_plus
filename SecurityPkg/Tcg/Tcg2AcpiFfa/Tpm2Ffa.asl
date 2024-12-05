@@ -1,3 +1,12 @@
+/** @file
+
+The TPM2 definition block in ACPI table for TCG2 physical presence.
+
+Copyright (c) Microsoft Corporation.<BR>
+SPDX-License-Identifier: BSD-2-Clause-Patent
+
+**/
+
 DefinitionBlock (
   "Tpm.aml",
   "SSDT",
