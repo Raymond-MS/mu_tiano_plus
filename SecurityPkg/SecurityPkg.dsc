@@ -418,6 +418,10 @@
   #
   SecurityPkg/FvReportPei/FvReportPei.inf
 
+[Components.AARCH64]
+  SecurityPkg/Tcg/Tcg2Acpi/Tcg2AcpiFfa.inf
+  SecurityPkg/Library/DxeTcg2PhysicalPresenceMinimumLib/DxeTcg2PhysicalPresenceMinimumLib.inf
+
 [BuildOptions]
    MSFT:*_*_IA32_DLINK_FLAGS = /ALIGN:256
   INTEL:*_*_IA32_DLINK_FLAGS = /ALIGN:256
