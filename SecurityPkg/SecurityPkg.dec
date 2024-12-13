@@ -507,6 +507,10 @@
   # @Prompt TPM device base address.
   gEfiSecurityPkgTokenSpaceGuid.PcdTpmBaseAddress|0xFED40000|UINT64|0x00010012
 
+    ## This PCD indicates internal TPM base address.<BR><BR>
+  # @Prompt TPM device base address.
+  gEfiSecurityPkgTokenSpaceGuid.PcdTpmInternalBaseAddress|0x10000010000|UINT64|0x0001002A
+
   ## This PCD indicates TPM max address.<BR><BR>
   # @Prompt TPM device max address.
   gEfiSecurityPkgTokenSpaceGuid.PcdTpmMaxAddress|0xFED44FFF|UINT64|0x00010029
