@@ -659,6 +659,14 @@
   ## This PCD records LASA field in CC EVENTLOG ACPI table.
   gEfiSecurityPkgTokenSpaceGuid.PcdCcEventlogAcpiTableLasa|0|UINT64|0x00010026
 
+  ## MU_CHANGE: Add a PCD to determine partition ID of TPM Service.
+  #
+  # Define the partition ID for TPM Service.
+  # Default PcdTpmServiceFfaPartitionId = 0x0, which should never be set to by
+  # the FF-A framework.
+  #
+  gEfiSecurityPkgTokenSpaceGuid.PcdTpmServiceFfaPartitionId|0|UINT16|0x0001002B
+
 [PcdsFeatureFlag]
   ## Indicates if the platform requires PK to be self-signed when setting the PK in setup mode.
   #   TRUE  - Require PK to be self-signed.
